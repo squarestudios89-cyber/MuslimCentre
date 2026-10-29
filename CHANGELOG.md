@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.1.0] - 2026-03-08
+
+### Added
+- **Qibla Direction (Kibla Compass) Feature**:
+  - Integrated device hardware sensors (`SensorManager` with `TYPE_ROTATION_VECTOR`, `TYPE_ACCELEROMETER`, `TYPE_MAGNETIC_FIELD`) in [`CompassSensorManager.kt`](file:///home/wesleyblock/AndroidStudioProjects/MuslimCentre/app/src/main/java/com/squarestudios/muslimcentre/data/compass/CompassSensorManager.kt).
+  - Built low-pass filter smoothing algorithm to deliver fluid compass movement without jitter.
+  - Calculated exact Qibla bearing (direction angle relative to True North towards Makkah: `21.4225° N, 39.8262° E`) using `com.batoulapps.adhan.Qibla`.
+  - Added Haversine distance calculator displaying distance to Makkah in kilometers (*e.g., "6,820 km to Makkah"*).
+  - Built interactive rotating 360° Compass Rose UI with Kaaba pointer (🕋) in [`QiblaScreen.kt`](file:///home/wesleyblock/AndroidStudioProjects/MuslimCentre/app/src/main/java/com/squarestudios/muslimcentre/ui/qibla/QiblaScreen.kt).
+  - Implemented haptic vibration feedback and Emerald Green glow state when the user's phone is aligned towards the Qibla (within ±3.5°).
+  - Added compass calibration prompt banner.
+
+- **Bottom Navigation Bar & App Layout**:
+  - Added Material 3 [`MainScreen.kt`](file:///home/wesleyblock/AndroidStudioProjects/MuslimCentre/app/src/main/java/com/squarestudios/muslimcentre/ui/main/MainScreen.kt) bottom navigation bar supporting seamless tab switching between **Salaah Times** and **Qibla Direction**.
+
+---
+
 ## [1.0.0] - 2026-03-08
 
 ### Added
