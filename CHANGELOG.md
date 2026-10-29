@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.3.0] - 2026-03-08
+
+### Added
+- **Google AdMob Ads & Ad-Free Subscription Feature**:
+  - Integrated Google Mobile Ads SDK (`com.google.android.gms:play-services-ads:25.5.0`) with AdMob initialization in [`AdManager.kt`](file:///home/wesleyblock/AndroidStudioProjects/MuslimCentre/app/src/main/java/com/squarestudios/muslimcentre/data/ads/AdManager.kt).
+  - Added permanent top banner ad container in [`BannerAdView.kt`](file:///home/wesleyblock/AndroidStudioProjects/MuslimCentre/app/src/main/java/com/squarestudios/muslimcentre/ui/ads/BannerAdView.kt) displayed at the top of [`MainScreen.kt`](file:///home/wesleyblock/AndroidStudioProjects/MuslimCentre/app/src/main/java/com/squarestudios/muslimcentre/ui/main/MainScreen.kt).
+  - Added sample test AdMob Application ID (`ca-app-pub-3940256099942544~3347511713`) in [`AndroidManifest.xml`](file:///home/wesleyblock/AndroidStudioProjects/MuslimCentre/app/src/main/AndroidManifest.xml) and test Banner Ad Unit ID (`ca-app-pub-3940256099942544/6300978111`).
+  - Added **"Remove Ads"** option in the top banner bar opening [`RemoveAdsDialog.kt`](file:///home/wesleyblock/AndroidStudioProjects/MuslimCentre/app/src/main/java/com/squarestudios/muslimcentre/ui/ads/RemoveAdsDialog.kt) with Monthly ($0.99) and Yearly ($6.99) subscription plans.
+  - Implemented persistent ad-free state (`isAdFree`) in [`AdManager.kt`](file:///home/wesleyblock/AndroidStudioProjects/MuslimCentre/app/src/main/java/com/squarestudios/muslimcentre/data/ads/AdManager.kt) that hides all top banner ads when subscribed.
+
+---
+
 ## [1.2.0] - 2026-03-08
 
 ### Added
