@@ -6,7 +6,7 @@
 
 ## 1. Project Overview
 
-**MuslimCentre** is an all-in-one Islamic mobile application built for Android using modern native technologies (Kotlin & Jetpack Compose). The application provides essential daily tools for Muslims worldwide, starting with offline-first **Salaah (Prayer) Times** with automatic geolocation and an interactive real-time **Qibla Direction (Kibla Compass)**.
+**MuslimCentre** is an all-in-one Islamic mobile application built for Android using modern native technologies (Kotlin & Jetpack Compose). The application provides essential daily tools for Muslims worldwide, including offline-first **Salaah (Prayer) Times** with automatic geolocation, an interactive real-time **Qibla Direction (Kibla Compass)**, and a customizable **Daily Quran Verse & Status Card Generator**.
 
 - **Package Name**: `com.squarestudios.muslimcentre`
 - **Application ID**: `com.squarestudios.muslimcentre`
@@ -37,22 +37,22 @@
 ## 3. Core Features & System Architecture
 
 ```
-+---------------------------------------------------------------------------------+
-|                                 MainActivity                                    |
-|                                      |                                          |
-|                                  MainScreen                                     |
-|                       (Bottom Navigation Bar Scaffold)                          |
-|                                /            \                                   |
-|                               /              \                                  |
-|               PrayerTimesScreen              QiblaScreen                        |
-|                       |                           |                             |
-|              PrayerTimesViewModel               QiblaViewModel                  |
-|                   /         \                       /       \                   |
-|                  /           \                     /         \                  |
-|    PrayerTimesRepository   LocationTracker   LocationTracker CompassSensorMgr   |
-|              |                    |                 |                |          |
-|         Adhan Engine         GPS/Geocoder      GPS/Geocoder     Device Sensors  |
-+---------------------------------------------------------------------------------+
++---------------------------------------------------------------------------------------------------+
+|                                          MainActivity                                             |
+|                                               |                                                   |
+|                                           MainScreen                                              |
+|                               (Bottom Navigation Bar Scaffold)                                    |
+|                                /              |             \                                     |
+|                               /               |              \                                    |
+|               PrayerTimesScreen          QiblaScreen       DailyVerseScreen                       |
+|                       |                       |                   |                               |
+|              PrayerTimesViewModel       QiblaViewModel    DailyVerseViewModel                     |
+|                   /       \               /       \               |                               |
+|                  /         \             /         \              |                               |
+|    PrayerTimesRepository LocationTracker LocationTracker Compass  QuranVerseRepository            |
+|              |                  |           |         SensorMgr   (Curated Verses & Daily Engine) |
+|         Adhan Engine       GPS/Geocoder GPS/Geocoder Sensors                                      |
++---------------------------------------------------------------------------------------------------+
 ```
 
 ### 3.1 Salaah (Prayer) Times Module
@@ -69,6 +69,12 @@
 - **Distance Calculation**: Uses Haversine formula to compute great-circle distance to Makkah in kilometers.
 - **Alignment Detection & Haptic Feedback**: When the top of the device points within ±3.5° of the Qibla bearing, the UI highlights in Emerald Green, displays a *"YOU ARE FACING KAABA!"* badge, and triggers haptic vibration via `LocalHapticFeedback`.
 
+### 3.3 Daily Quran Verse & Status Card Module
+- **Daily Rotation Algorithm**: `QuranVerseRepository` deterministic selection picks an inspiring verse based on `dayOfYear` modulo dataset size.
+- **Background Style Themes**: `VerseBackgroundStyle` defines 5 curated Islamic aesthetic color palettes (*Emerald Islamic, Twilight Midnight, Makkah Gold, Ocean Teal, Sunset Crimson*).
+- **Card Preview Canvas**: `DailyVerseScreen` renders the verse card with Arabic typography, English translation, Surah & Ayah reference, topic badge, and discrete **MuslimCentre** watermark.
+- **Social Sharing Integration**: Includes a **"Share as Status"** button with a confirmation dialog prepared for future WhatsApp Status, Instagram Story, and Facebook sharing, plus a **"Copy Text"** action.
+
 ---
 
 ## 4. Project Directory & Source File Map
@@ -82,12 +88,17 @@ app/src/main/java/com/squarestudios/muslimcentre/
 │   ├── location/
 │   │   └── LocationTracker.kt           # FusedLocationProviderClient & Geocoder wrapper
 │   ├── model/
-│   │   └── PrayerTimeModel.kt           # Data classes for Prayer items, methods, madhabs
+│   │   ├── PrayerTimeModel.kt           # Data classes for Prayer items, methods, madhabs
+│   │   └── QuranVerseModel.kt           # Data classes for Quran verses & background themes
 │   └── repository/
-│       └── PrayerTimesRepository.kt     # Adhan library wrapper & Hijri conversion
+│       ├── PrayerTimesRepository.kt     # Adhan library wrapper & Hijri conversion
+│       └── QuranVerseRepository.kt      # Curated Quran verses & daily selection logic
 └── ui/
+    ├── dailyverse/
+    │   ├── DailyVerseScreen.kt          # Jetpack Compose UI for Daily Verse & Card Canvas
+    │   └── DailyVerseViewModel.kt       # ViewModel for Daily Verse selection & themes
     ├── main/
-    │   └── MainScreen.kt                # Bottom Navigation Bar scaffold
+    │   └── MainScreen.kt                # Bottom Navigation Bar scaffold (3 tabs)
     ├── prayertimes/
     │   ├── PrayerTimesScreen.kt         # Jetpack Compose UI for Salaah Times
     │   └── PrayerTimesViewModel.kt      # ViewModel for Salaah Times state & ticker

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccessTime
+import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Explore
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -22,11 +23,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.squarestudios.muslimcentre.ui.dailyverse.DailyVerseScreen
 import com.squarestudios.muslimcentre.ui.prayertimes.PrayerTimesScreen
 import com.squarestudios.muslimcentre.ui.qibla.QiblaScreen
 
 private val EmeraldDark = Color(0xFF06382B)
-private val EmeraldMain = Color(0xFF0D5C46)
 private val GoldAccent = Color(0xFFE5C158)
 
 @Composable
@@ -88,6 +89,31 @@ fun MainScreen(modifier: Modifier = Modifier) {
                         unselectedTextColor = Color.White.copy(alpha = 0.6f)
                     )
                 )
+
+                NavigationBarItem(
+                    selected = selectedTab == 2,
+                    onClick = { selectedTab = 2 },
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Default.AutoAwesome,
+                            contentDescription = "Daily Verse"
+                        )
+                    },
+                    label = {
+                        Text(
+                            text = "Daily Verse",
+                            fontSize = 12.sp,
+                            fontWeight = if (selectedTab == 2) FontWeight.Bold else FontWeight.Normal
+                        )
+                    },
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = EmeraldDark,
+                        selectedTextColor = GoldAccent,
+                        indicatorColor = GoldAccent,
+                        unselectedIconColor = Color.White.copy(alpha = 0.6f),
+                        unselectedTextColor = Color.White.copy(alpha = 0.6f)
+                    )
+                )
             }
         },
         modifier = modifier
@@ -100,6 +126,7 @@ fun MainScreen(modifier: Modifier = Modifier) {
             when (selectedTab) {
                 0 -> PrayerTimesScreen()
                 1 -> QiblaScreen()
+                2 -> DailyVerseScreen()
             }
         }
     }

@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.2.0] - 2026-03-08
+
+### Added
+- **Daily Quran Verse & Custom Image Generator Feature**:
+  - Built curated dataset of inspiring Quranic verses in [`QuranVerseRepository.kt`](file:///home/wesleyblock/AndroidStudioProjects/MuslimCentre/app/src/main/java/com/squarestudios/muslimcentre/data/repository/QuranVerseRepository.kt) with automatic daily verse rotation.
+  - Implemented customizable verse card canvas with Arabic Ayah, English Translation, Surah Reference, topic badge, and "MuslimCentre" watermark in [`DailyVerseScreen.kt`](file:///home/wesleyblock/AndroidStudioProjects/MuslimCentre/app/src/main/java/com/squarestudios/muslimcentre/ui/dailyverse/DailyVerseScreen.kt).
+  - Added 5 selectable Islamic background styles (*Emerald Islamic, Twilight Midnight, Makkah Gold, Ocean Teal, Sunset Crimson*) in [`QuranVerseModel.kt`](file:///home/wesleyblock/AndroidStudioProjects/MuslimCentre/app/src/main/java/com/squarestudios/muslimcentre/data/model/QuranVerseModel.kt).
+  - Added **"Share as Status"** button with a dialog placeholder prepared for future WhatsApp Status, Instagram Story, and social media integration.
+  - Added **"Copy Text"** action button to copy verse text to clipboard.
+  - Added verse browsing controls to cycle through inspirational verses.
+  - Added **Daily Verse** tab to bottom navigation bar in [`MainScreen.kt`](file:///home/wesleyblock/AndroidStudioProjects/MuslimCentre/app/src/main/java/com/squarestudios/muslimcentre/ui/main/MainScreen.kt).
+
+---
+
 ## [1.1.0] - 2026-03-08
 
 ### Added
