@@ -1,6 +1,7 @@
 package com.squarestudios.muslimcentre.ui.dailyverse
 
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -56,13 +57,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.squarestudios.muslimcentre.data.model.BackgroundType
 import com.squarestudios.muslimcentre.data.model.QuranVerse
 import com.squarestudios.muslimcentre.data.model.VerseBackgroundStyle
 
@@ -253,12 +257,37 @@ fun VerseCardCanvas(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(brush = Brush.verticalGradient(colors = style.gradientColors))
-                .padding(24.dp)
+                .then(
+                    if (style.type == BackgroundType.GRADIENT) {
+                        Modifier.background(brush = Brush.verticalGradient(colors = style.gradientColors))
+                    } else {
+                        Modifier
+                    }
+                )
         ) {
+            // Render background image if style type is IMAGE
+            if (style.type == BackgroundType.IMAGE && style.imageResId != null) {
+                Image(
+                    painter = painterResource(id = style.imageResId),
+                    contentDescription = style.title,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.matchParentSize()
+                )
+
+                // Dark Scrim overlay for text legibility
+                Box(
+                    modifier = Modifier
+                        .matchParentSize()
+                        .background(Color.Black.copy(alpha = 0.35f))
+                )
+            }
+
+            // Verse Card Content
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(24.dp)
             ) {
                 // Top Tag & Theme Badge
                 Row(
@@ -269,7 +298,7 @@ fun VerseCardCanvas(
                     Box(
                         modifier = Modifier
                             .background(
-                                color = style.accentColor.copy(alpha = 0.2f),
+                                color = style.accentColor.copy(alpha = 0.25f),
                                 shape = RoundedCornerShape(50)
                             )
                             .padding(horizontal = 12.dp, vertical = 4.dp)
@@ -286,7 +315,7 @@ fun VerseCardCanvas(
                     Icon(
                         imageVector = Icons.Default.FormatQuote,
                         contentDescription = null,
-                        tint = style.accentColor.copy(alpha = 0.5f),
+                        tint = style.accentColor.copy(alpha = 0.6f),
                         modifier = Modifier.size(24.dp)
                     )
                 }
@@ -311,7 +340,7 @@ fun VerseCardCanvas(
                     modifier = Modifier
                         .width(60.dp)
                         .height(2.dp)
-                        .background(style.accentColor.copy(alpha = 0.5f))
+                        .background(style.accentColor.copy(alpha = 0.6f))
                 )
 
                 Spacer(modifier = Modifier.height(18.dp))
@@ -321,7 +350,7 @@ fun VerseCardCanvas(
                     text = "\"${verse.englishTranslation}\"",
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Medium,
-                    color = style.textColor.copy(alpha = 0.9f),
+                    color = style.textColor.copy(alpha = 0.95f),
                     textAlign = TextAlign.Center,
                     lineHeight = 22.sp,
                     modifier = Modifier.fillMaxWidth()
@@ -346,7 +375,7 @@ fun VerseCardCanvas(
                         text = "MuslimCentre",
                         fontSize = 11.sp,
                         fontWeight = FontWeight.SemiBold,
-                        color = style.textColor.copy(alpha = 0.5f)
+                        color = style.textColor.copy(alpha = 0.6f)
                     )
                 }
             }
@@ -374,7 +403,7 @@ fun BackgroundThemeSelector(
                 )
                 Spacer(modifier = Modifier.width(6.dp))
                 Text(
-                    text = "Select Background Theme",
+                    text = "Select Background Image or Theme",
                     fontWeight = FontWeight.Bold,
                     fontSize = 14.sp,
                     color = EmeraldDark
@@ -402,14 +431,34 @@ fun BackgroundThemeSelector(
                     ) {
                         Box(
                             modifier = Modifier
-                                .size(48.dp)
+                                .size(54.dp)
                                 .clip(CircleShape)
-                                .background(
-                                    brush = Brush.verticalGradient(colors = style.gradientColors)
+                                .then(
+                                    if (style.type == BackgroundType.GRADIENT) {
+                                        Modifier.background(
+                                            brush = Brush.verticalGradient(colors = style.gradientColors)
+                                        )
+                                    } else {
+                                        Modifier
+                                    }
                                 )
                                 .border(width = 3.dp, color = borderAnimColor, shape = CircleShape),
                             contentAlignment = Alignment.Center
                         ) {
+                            if (style.type == BackgroundType.IMAGE && style.imageResId != null) {
+                                Image(
+                                    painter = painterResource(id = style.imageResId),
+                                    contentDescription = style.title,
+                                    contentScale = ContentScale.Crop,
+                                    modifier = Modifier.matchParentSize()
+                                )
+                                Box(
+                                    modifier = Modifier
+                                        .matchParentSize()
+                                        .background(Color.Black.copy(alpha = 0.25f))
+                                )
+                            }
+
                             if (isSelected) {
                                 Icon(
                                     imageVector = Icons.Default.Check,
@@ -462,7 +511,7 @@ fun ShareVerseDialog(
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 Text(
-                    text = "Your custom verse card with the '${style.title}' theme is ready to share!",
+                    text = "Your custom verse card with '${style.title}' background is ready to share!",
                     fontSize = 14.sp,
                     color = Color.DarkGray
                 )
@@ -531,11 +580,11 @@ fun DailyVerseScreenPreview() {
         ) {
             VerseCardCanvas(
                 verse = sampleVerse,
-                style = VerseBackgroundStyle.EMERALD_GEOMETRY
+                style = VerseBackgroundStyle.MOSQUE_SILHOUETTE
             )
 
             BackgroundThemeSelector(
-                selectedStyle = VerseBackgroundStyle.EMERALD_GEOMETRY,
+                selectedStyle = VerseBackgroundStyle.MOSQUE_SILHOUETTE,
                 onStyleSelected = {}
             )
         }

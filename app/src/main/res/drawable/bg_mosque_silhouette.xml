@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="400dp"
+    android:height="600dp"
+    android:viewportWidth="400"
+    android:viewportHeight="600">
+
+    <!-- Sky Gradient -->
+    <path android:pathData="M0,0h400v600h-400z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="200"
+                android:startY="0"
+                android:endX="200"
+                android:endY="600"
+                android:type="linear">
+                <item android:color="#FF1A0B2E" android:offset="0.0" />
+                <item android:color="#FF38154C" android:offset="0.4" />
+                <item android:color="#FF7A2858" android:offset="0.7" />
+                <item android:color="#FFB34752" android:offset="1.0" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Crescent Moon -->
+    <path
+        android:fillColor="#FFFFD54F"
+        android:pathData="M320,80 A25,25 0 1 0 355,115 A20,20 0 1 1 320,80 Z" />
+
+    <!-- Stars -->
+    <path android:fillColor="#FFFFFFFF" android:pathData="M80,60l2,4l4,2l-4,2l-2,4l-2-4l-4-2l4-2z" />
+    <path android:fillColor="#FFFFFFFF" android:pathData="M240,100l1.5,3l3,1.5l-3,1.5l-1.5,3l-1.5-3l-3-1.5l3-1.5z" />
+    <path android:fillColor="#FFFFFFFF" android:pathData="M150,140l1,2l2,1l-2,1l-1,2l-1-2l-2-1l2-1z" />
+
+    <!-- Mosque Silhouette Layer -->
+    <!-- Domes -->
+    <path
+        android:fillColor="#FF0D061A"
+        android:pathData="M200,450 C200,400 240,380 250,380 C260,380 300,400 300,450 Z" />
+    <path
+        android:fillColor="#FF0D061A"
+        android:pathData="M100,480 C100,440 130,420 140,420 C150,420 180,440 180,480 Z" />
+
+    <!-- Base Walls -->
+    <path
+        android:fillColor="#FF0D061A"
+        android:pathData="M40,460h320v140h-320z" />
+
+    <!-- Minaret 1 (Left) -->
+    <path
+        android:fillColor="#FF0D061A"
+        android:pathData="M50,600v-220l10,-20l10,20v220z" />
+    <!-- Minaret 2 (Right) -->
+    <path
+        android:fillColor="#FF0D061A"
+        android:pathData="M330,600v-220l10,-20l10,20v220z" />
+
+    <!-- Dark Overlay Scrim for text legibility -->
+    <path android:pathData="M0,0h400v600h-400z" android:fillColor="#800D061A" />
+</vector>
